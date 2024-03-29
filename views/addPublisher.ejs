@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="/stylesheets/admin-dashboard.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
+</head>
+<body> 
+    <%- include('partials/admin-sidebar.ejs') %>
+
+    <section id="content">
+        <%- include('partials/admin-navbar.ejs') %>
+        <main>
+            <%- include('partials/form.ejs') %>
+        </main>
+    </section>
+    
+    <script src="/javascripts/add-publisher.js"></script>
+    <script src="/javascripts/form.js"></script>
+    <script src="/javascripts/admin-dashboard.js"></script>
+</body>
+</html>
