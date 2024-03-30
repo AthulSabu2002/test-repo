@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 const renderDashboard = asyncHandler(async (req, res) => {
    if(req.session.loggedIn){
-    res.render('userDashboard');
+    res.render('user/userDashboard');
    }
     else{
       res.redirect('/auth/login');
@@ -41,7 +41,7 @@ const registerUserWithOTP = asyncHandler(async (req, res) => {
 
   try {
     await sendOTPEmail(req.body.email, otp);
-    res.render('otpReg.ejs', { email: req.body.email });
+    res.render('user/otpReg.ejs', { email: req.body.email });
   } catch (err) {
     console.error(err);
     res.status(400).json({ message: 'Registration failed' });
@@ -226,7 +226,7 @@ const changePasswordRequest = asyncHandler(async (req, res) => {
   const user = await User.findOne({ resetPasswordToken: requestToken, resetPasswordExpires: { $gt: Date.now() }});
   console.log(user);
   if (user) {
-    res.render('resetPassword.ejs',{ requestToken });
+    res.render('user/resetPassword.ejs',{ requestToken });
   } else {
     res.status(400).send('Invalid or expired token');
   }

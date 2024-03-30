@@ -2,12 +2,13 @@ const asyncHandler = require("express-async-handler");
 const Publisher = require("../models/publisherModel");
 const Request = require("../models/requestModel");
 const bcrypt = require('bcrypt')
+const Layout = require("../models/newsPaperLayout");
 
 
 
 const renderAddPublisher = asyncHandler(async (req, res) => {
     try {
-        res.render('addPublisher', { activeTab: 'add-publisher' })
+        res.render('admin/addPublisher', { activeTab: 'add-publisher' })
     } catch (error) {
         console.error('Error fetching requests:', error);
         res.status(500).send('Error fetching requests');
@@ -20,7 +21,7 @@ const renderDashboard = asyncHandler(async (req, res) => {
         const publisherCount = await Publisher.countDocuments();
         const requestCount = await Request.countDocuments();
         const requests = await Request.find();
-        res.render('adminDashboard', { requests: requests, requestCount: requestCount, publisherCount: publisherCount,  activeTab: 'dashboard' });
+        res.render('admin/adminDashboard', { requests: requests, requestCount: requestCount, publisherCount: publisherCount,  activeTab: 'dashboard' });
     } catch (error) {
         console.error('Error fetching requests:', error);
         res.status(500).send('Error fetching requests');
@@ -32,7 +33,7 @@ const viewPublishers = asyncHandler(async (req, res) => {
     try {
         const publishers = await Publisher.find({});
         
-        res.render('viewPublishers', { publishers, activeTab: 'view-publishers' });
+        res.render('admin/viewPublishers', { publishers, activeTab: 'view-publishers' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Error fetching publishers." });
@@ -43,7 +44,7 @@ const viewPublishers = asyncHandler(async (req, res) => {
 const viewRequest = async(req, res) => {
     try {
         const requests = await Request.find();
-        res.render('view-publisher-requests', { requests: requests, activeTab: 'view-requests' });
+        res.render('admin/view-publisher-requests', { requests: requests, activeTab: 'view-requests' });
     } catch (error) {
         console.error('Error fetching requests:', error);
         res.status(500).send('Error fetching requests');
@@ -95,7 +96,30 @@ const addPublisher = asyncHandler(async (req, res) => {
             cancellationDeadline
         });
 
+
         await newPublisher.save();
+
+        const existingLayout = await Layout.findOne({ $or: [{ email }, { newspaperName }] });
+
+        console.log(existingLayout);
+
+        if (existingLayout) {
+            console.log('Layout with the same email or newspaper name already exists.')
+            return res.status(400).json({ error: 'Publisher with the same email or newspaper name already exists.' });
+        }
+
+        const layout = new Layout({
+            newspaperName,
+            email,
+            layoutName: newspaperName
+        });
+
+        try{
+            await layout.save();
+        }
+        catch(error){
+            consolr.log('Cannot save layout')
+        }
 
         try {
             await Request.deleteOne({ email, newspaperName: newspaperName });

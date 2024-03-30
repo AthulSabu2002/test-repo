@@ -12,7 +12,7 @@ const authCheck = (req, res, next) => {
 }
 
 router.get('/', authCheck, function(req, res, next) {
-  res.render('home', {name: req.user.username});
+  res.render('user/home', {name: req.user.username});
 });
 
 

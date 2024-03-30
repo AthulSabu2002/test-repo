@@ -36,7 +36,7 @@ app.use(express.static("public"));
 
 router.route("/login").get((req,res) => {
     try{
-      res.render('login.ejs')
+      res.render("user/login");
     }
     catch(err){
       res.send(err);
@@ -45,18 +45,17 @@ router.route("/login").get((req,res) => {
 
 router.route("/registerUserWithOTP").get((req,res) => {
   try{
-    res.render('register.ejs')
+    res.render('user/register.ejs')
   }
   catch(err){
     res.send(err);
     }
 });
 
-router.route("/dashboard")
 
 router.route("/forgot").get((req, res) => {
   try{
-    res.render('forgot');
+    res.render('user/forgot');
   }
   catch(err){
     res.send(err);
@@ -65,7 +64,7 @@ router.route("/forgot").get((req, res) => {
 
 router.route("/resetPassword").get((req, res) => {
   try{
-    res.render('resetPassword');
+    res.render('user/resetPassword');
   }
   catch(err){
     res.send(err);
@@ -74,7 +73,7 @@ router.route("/resetPassword").get((req, res) => {
 
 router.route("/verifyOtp").get((req, res) =>{
     const userEmail = req.query.email;
-    res.render('verify-otp', { email: userEmail });
+    res.render('user/verify-otp', { email: userEmail });
 });
 
 router.route("/logout").post(logoutUser);
