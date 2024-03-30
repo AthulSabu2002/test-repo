@@ -36,7 +36,7 @@ app.use(express.static("public"));
 
 router.route("/login").get((req,res) => {
     try{
-      res.render("user/login");
+      res.render("login");
     }
     catch(err){
       res.send(err);
@@ -45,7 +45,7 @@ router.route("/login").get((req,res) => {
 
 router.route("/registerUserWithOTP").get((req,res) => {
   try{
-    res.render('user/register.ejs')
+    res.render('register.ejs')
   }
   catch(err){
     res.send(err);
@@ -55,7 +55,7 @@ router.route("/registerUserWithOTP").get((req,res) => {
 
 router.route("/forgot").get((req, res) => {
   try{
-    res.render('user/forgot');
+    res.render('forgot');
   }
   catch(err){
     res.send(err);
@@ -64,7 +64,7 @@ router.route("/forgot").get((req, res) => {
 
 router.route("/resetPassword").get((req, res) => {
   try{
-    res.render('user/resetPassword');
+    res.render('resetPassword');
   }
   catch(err){
     res.send(err);

@@ -19,7 +19,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 
 router.get('/login', function(req, res, next) {
-  res.render('/publisher/publisherLogin')
+  res.render('publisherLogin')
 });
 
 
@@ -27,7 +27,7 @@ router.route('/dashboard').get(urlencodedParser, renderDashboard);
 
 
 router.get('/request', function(req, res, next) {
-  res.render('/publisher/publisherRequest')
+  res.render('publisherRequest')
 });
 
 
