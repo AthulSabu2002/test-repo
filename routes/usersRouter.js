@@ -7,7 +7,9 @@ const {
       logoutUser, 
       renderDashboard,  
       verifyOtp,
-      registerUserWithOTP } = require("../controllers/userController");
+      registerUserWithOTP,
+      renderBookSlot,
+      renderBookSlotByDate } = require("../controllers/userController");
 
 
 const router = express.Router();
@@ -37,6 +39,18 @@ app.use(express.static("public"));
 router.route("/login").get((req,res) => {
     try{
       res.render("login");
+    }
+    catch(err){
+      res.send(err);
+      }
+  });
+
+  router.route("/viewSlot/:layoutName").get((req,res) => {
+    console.log('Hii ftom route');
+    try{
+      const layoutName = req.params.layoutName; // Retrieve layoutName from URL parameter
+      res.render(layoutName);
+      console.log('Hii ftom route');
     }
     catch(err){
       res.send(err);
@@ -75,6 +89,10 @@ router.route("/verifyOtp").get((req, res) =>{
     const userEmail = req.query.email;
     res.render('user/verify-otp', { email: userEmail });
 });
+
+router.route("/viewSlot").get(renderBookSlot);
+
+router.route("/viewSlot").post(renderBookSlotByDate);
 
 router.route("/logout").post(logoutUser);
 

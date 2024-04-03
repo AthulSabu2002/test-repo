@@ -4,8 +4,10 @@ const {
     addPublisher,
     viewPublishers,
     viewRequest,
+    viewPublisherDetails,
     renderDashboard,
     renderAddPublisher,
+    renderNewspaperSlots,
     deletePublisher,
     deleteRequest
     } = require("../controllers/adminController");
@@ -17,7 +19,11 @@ router.route('/add-publisher').get(renderAddPublisher);
 
 router.route('/view-publishers').get(viewPublishers);
 
+router.route('/add-newspaperSlots-details').get(renderNewspaperSlots);
+
 router.route('/view-requests').get(viewRequest);
+
+router.route('/view-request-details/:id').get(viewPublisherDetails);
 
 router.route('/add-publisher').post(addPublisher);
 
