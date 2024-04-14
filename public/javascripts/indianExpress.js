@@ -112,19 +112,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('slotId', slotId);
                 formData.append('newspaperName', newspaperName); 
     
-                fetch('/users/book-slot', {
+                fetch('/stripe-checkout', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    throw new Error('Failed to book slot.');
-                })
-                .then(data => {
-
-                    alert('Slot booked successfully.');
+                .then((response) =>
+                    response.json()
+                )
+                .then((url) => {
+                    location.href = url;
                 })
                 .catch(error => {
                     console.error('Error booking slot:', error);
